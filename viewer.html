@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Presentation Viewer</title>
+  <!-- 引入 FontAwesome 企業圖示庫 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .enterprise-page {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 頂部導覽列 */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover {
+      background: #334155;
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+
+    .badge-confidential {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin: 10px 0 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* 面板樣式 */
+    .panel-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-ppt-present {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+
+    .btn-ppt-present:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.5);
+    }
+
+    /* PDF 播放容器 */
+    .pdf-container {
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #475569;
+      background: #0f172a;
+    }
+
+    .pdf-container:fullscreen {
+      width: 100vw !important;
+      height: 100vh !important;
+      background: #000000 !important;
+    }
+
+    iframe {
+      width: 100%;
+      height: 750px;
+      border: none;
+      display: block;
+    }
+
+    .pdf-container:fullscreen iframe {
+      height: 100vh !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="enterprise-page">
+
+  <!-- 頂部導覽列 -->
+  <div class="top-nav">
+    <a href="./" class="btn-back">
+      <i class="fa-solid fa-arrow-left"></i> Back to Archive
+    </a>
+    <span class="badge-confidential"><i class="fa-solid fa-lock"></i> RESTRICTED ACCESS</span>
+  </div>
+
+  <!-- 主標題 (由網址動態帶入) -->
+  <div class="page-title" id="doc-title">
+    <i class="fa-solid fa-file-powerpoint" style="color: #38bdf8;"></i> Loading Presentation...
+  </div>
+
+  <!-- PDF 簡報預覽面板 -->
+  <div class="panel-card">
+    <div class="panel-header">
+      <div class="panel-title">
+        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Executive Presentation View
+      </div>
+      <button type="button" class="btn-ppt-present" onclick="startPPTPresentation()">
+        <i class="fa-solid fa-play"></i> Start Presentation (全螢幕簡報)
+      </button>
+    </div>
+    <div class="pdf-container" id="pdf-wrapper">
+      <iframe id="pdf-frame" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 自動解析 URL 參數 (例如 ?file=xxx.pdf&title=xxxx)
+  const urlParams = new URLSearchParams(window.location.search);
+  const fileName = urlParams.get('file');
+  const customTitle = urlParams.get('title') || 'Corporate Presentation Archive';
+
+  const docTitleEl = document.getElementById('doc-title');
+  const pdfFrameEl = document.getElementById('pdf-frame');
+
+  if (fileName) {
+    // 動態設定標題與 PDF 來源 (並自動帶入全螢幕滿版參數)
+    docTitleEl.innerHTML = `<i class="fa-solid fa-file-powerpoint" style="color: #38bdf8;"></i> ${decodeURIComponent(customTitle)}`;
+    pdfFrameEl.src = `${encodeURIComponent(fileName)}#view=Fit&pagemode=thumbs`;
+  } else {
+    docTitleEl.innerText = 'Error: No PDF file specified.';
+  }
+
+  // 全螢幕 PPT 簡報播放功能
+  function startPPTPresentation() {
+    const pdfWrapper = document.getElementById('pdf-wrapper');
+    if (!document.fullscreenElement) {
+      if (pdfWrapper.requestFullscreen) {
+        pdfWrapper.requestFullscreen();
+      } else if (pdfWrapper.webkitRequestFullscreen) {
+        pdfWrapper.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
