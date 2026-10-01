@@ -230,6 +230,12 @@
     <!-- 卡片式檔案清單 -->
     <div class="doc-grid">
 
+    <!-- 卡片式檔案清單 -->
+    <div class="doc-grid">
+
+<!-- 卡片式檔案清單 -->
+    <div class="doc-grid">
+
       <!-- 簡報 1：AMAT ENP 報告 -->
       <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card">
         <div class="doc-header">
@@ -249,7 +255,8 @@
         <div class="doc-title">Operation Meeting MFG (2026-09-22)</div>
         <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
       </a>
-<!-- 簡報 3：Training Center 2026 -->
+
+      <!-- 簡報 3：Training Center 2026 -->
       <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card">
         <div class="doc-header">
           <i class="fa-solid fa-file-powerpoint doc-icon"></i>
