@@ -306,11 +306,18 @@
     padding-bottom: 10px;
   }
 
-  /* 2欄網格排版 */
+  /* 強制設定為 4 欄網格排版 (4xn 矩陣) */
   .doc-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
+  }
+
+  /* 響應式調整：中型螢幕自動變為 2 欄，手機版變為 1 欄 */
+  @media (max-width: 1200px) {
+    .doc-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
@@ -322,7 +329,7 @@
   .doc-card {
     background: #1e293b;
     border-radius: 10px;
-    padding: 18px;
+    padding: 16px;
     text-decoration: none;
     color: #ffffff;
     display: flex;
@@ -331,14 +338,13 @@
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid #334155;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    cursor: grab; /* 鼠標變為抓取手勢 */
+    cursor: grab;
   }
 
   .doc-card:active {
     cursor: grabbing;
   }
 
-  /* 拖曳時的樣式變化 */
   .doc-card.dragging {
     opacity: 0.4;
     border: 2px dashed #38bdf8;
@@ -357,38 +363,38 @@
   }
 
   .doc-icon {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: #38bdf8;
   }
 
   .doc-status {
     background: rgba(5, 150, 105, 0.2);
     color: #34d399;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 2px 6px;
     border-radius: 4px;
     letter-spacing: 0.05em;
     border: 1px solid rgba(52, 211, 153, 0.3);
   }
 
   .doc-title {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #f8fafc;
-    line-height: 1.4;
+    line-height: 1.35;
   }
 
   .doc-desc {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #94a3b8;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.35;
   }
 </style>
 
 <script>
-  // 實作滑鼠拖曳排序功能
+  // 拖曳排序功能 (支援 4 欄矩陣拖曳計算)
   const container = document.getElementById('doc-grid-container');
   let draggedItem = null;
 
@@ -424,7 +430,6 @@
 
     return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect();
-      // 計算滑鼠相對元素中心點的距離，支援 2 欄式矩陣拖曳
       const offsetX = x - box.left - box.width / 2;
       const offsetY = y - box.top - box.height / 2;
       const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
