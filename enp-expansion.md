@@ -9,7 +9,11 @@
   </div>
   <div style="margin-bottom: 15px;">
     <label>密碼：</label><br>
-    <input type="password" id="password" placeholder="••••••••" style="width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;">
+    <!-- 密碼輸入框與切換按鈕外層容器 -->
+    <div style="position: relative; display: flex; align-items: center; margin-top: 5px;">
+      <input type="password" id="password" placeholder="••••••••" style="width: 100%; padding: 8px 35px 8px 8px; box-sizing: border-box;">
+      <button type="button" id="toggle-password-btn" style="position: absolute; right: 5px; background: none; border: none; cursor: pointer; font-size: 16px; padding: 4px;" title="切換顯示密碼">👁️</button>
+    </div>
   </div>
   <button type="button" id="login-btn" style="background-color: #0366d6; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%;">登入觀看</button>
   <p id="error-msg" style="color: red; margin-top: 10px; display: none;"></p>
@@ -54,6 +58,15 @@
   const protectedContent = document.getElementById('protected-content');
   const userInfo = document.getElementById('user-info');
   const errorMsg = document.getElementById('error-msg');
+  const passwordInput = document.getElementById('password');
+  const togglePasswordBtn = document.getElementById('toggle-password-btn');
+
+  // 切換密碼顯示/隱藏功能
+  togglePasswordBtn.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    togglePasswordBtn.innerText = isPassword ? '🙈' : '👁️';
+  });
 
   // 監聽登入狀態
   onAuthStateChanged(auth, (user) => {
@@ -70,7 +83,7 @@
   // 綁定登入點擊事件
   document.getElementById('login-btn').addEventListener('click', () => {
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const password = passwordInput.value;
     errorMsg.style.display = 'none';
 
     signInWithEmailAndPassword(auth, email, password)
