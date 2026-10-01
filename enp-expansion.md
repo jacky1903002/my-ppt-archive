@@ -9,7 +9,6 @@
   </div>
   <div style="margin-bottom: 15px;">
     <label>密碼：</label><br>
-    <!-- 密碼輸入框與切換按鈕外層容器 -->
     <div style="position: relative; display: flex; align-items: center; margin-top: 5px;">
       <input type="password" id="password" placeholder="••••••••" style="width: 100%; padding: 8px 35px 8px 8px; box-sizing: border-box;">
       <button type="button" id="toggle-password-btn" style="position: absolute; right: 5px; background: none; border: none; cursor: pointer; font-size: 16px; padding: 4px;" title="切換顯示密碼">👁️</button>
@@ -19,7 +18,7 @@
   <p id="error-msg" style="color: red; margin-top: 10px; display: none;"></p>
 </div>
 
-<!-- 2. 受保護內容 (預設直接加上內聯隱藏 style="display: none;") -->
+<!-- 2. 受保護內容 (預設直接加上內聯隱藏) -->
 <div id="protected-content" style="display: none !important;">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #f6f8fa; padding: 10px; border-radius: 5px;">
     <span id="user-info" style="color: #28a745; font-weight: bold;"></span>
@@ -36,30 +35,34 @@
   </ul>
 </div>
 
-<!-- 3. Firebase 腳本 (記得更換金鑰) -->
+<!-- 3. Firebase SDK 驗證模組 -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // 請記得替換為您在 Firebase Console 取得的金鑰設定
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+  // ⚠️ 請將以下參數替換為您在 Firebase 控制台看到的真實資料
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAxz1tGF3ExWTH-KQKUq5IRvqEr6iwuVmQ",
+  authDomain: "my-ppt-auth.firebaseapp.com",
+  databaseURL: "https://my-ppt-auth-default-rtdb.firebaseio.com",
+  projectId: "my-ppt-auth",
+  storageBucket: "my-ppt-auth.firebasestorage.app",
+  messagingSenderId: "986466126958",
+  appId: "1:986466126958:web:31f4e24db18f18e347ea7f",
+  measurementId: "G-51PC8DCJDM"
+};
 
-  const loginSection = document.getElementById('login-section');
-  const protectedContent = document.getElementById('protected-content');
-  const userInfo = document.getElementById('user-info');
-  const errorMsg = document.getElementById('error-msg');
-  const passwordInput = document.getElementById('password');
-  const togglePasswordBtn = document.getElementById('toggle-password-btn');
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
   // 切換密碼顯示/隱藏功能
   togglePasswordBtn.addEventListener('click', () => {
@@ -68,19 +71,21 @@
     togglePasswordBtn.innerText = isPassword ? '🙈' : '👁️';
   });
 
-  // 監聽登入狀態
+  // 監聽 Firebase 登入狀態變更
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      // 驗證成功：隱藏登入框，解鎖顯示 PDF 內容
       loginSection.style.display = 'none';
       protectedContent.style.setProperty('display', 'block', 'important');
       userInfo.innerText = '已登入：' + user.email;
     } else {
+      // 未登入或已登出：顯示登入框，強制隱藏簡報
       loginSection.style.display = 'block';
       protectedContent.style.setProperty('display', 'none', 'important');
     }
   });
 
-  // 綁定登入點擊事件
+  // 執行 Firebase Email/Password 登入驗證
   document.getElementById('login-btn').addEventListener('click', () => {
     const email = document.getElementById('email').value;
     const password = passwordInput.value;
@@ -88,12 +93,13 @@
 
     signInWithEmailAndPassword(auth, email, password)
       .catch((error) => {
-        errorMsg.innerText = "登入失敗：請檢查帳號密碼";
+        console.error("Firebase Login Error:", error);
+        errorMsg.innerText = "登入失敗：請確認輸入的電子郵件與密碼是否與 Firebase 設定相符";
         errorMsg.style.display = 'block';
       });
   });
 
-  // 綁定登出點擊事件
+  // 執行登出
   document.getElementById('logout-btn').addEventListener('click', () => {
     signOut(auth);
   });
