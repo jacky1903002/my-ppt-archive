@@ -233,52 +233,143 @@
     <!-- 卡片式檔案清單 -->
     <div class="doc-grid">
 
-<!-- 卡片式檔案清單 -->
-    <div class="doc-grid">
-
-      <!-- 簡報 1：AMAT ENP 報告 -->
-      <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card">
-        <div class="doc-header">
-          <i class="fa-solid fa-file-powerpoint doc-icon"></i>
-          <span class="doc-status">CONFIDENTIAL</span>
-        </div>
-        <div class="doc-title">AMAT ENP Pre-treatment & Line Expansion 2026</div>
-        <p class="doc-desc">Capacity assessment, automated pre-treatment integration, and output forecasting.</p>
-      </a>
-
-      <!-- 簡報 2：Operation Meeting MFG 0922 -->
-      <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card">
-        <div class="doc-header">
-          <i class="fa-solid fa-file-powerpoint doc-icon"></i>
-          <span class="doc-status">CONFIDENTIAL</span>
-        </div>
-        <div class="doc-title">Operation Meeting MFG (2026-09-22)</div>
-        <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
-      </a>
-
-      <!-- 簡報 3：Training Center 2026 -->
-      <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card">
-        <div class="doc-header">
-          <i class="fa-solid fa-file-powerpoint doc-icon"></i>
-          <span class="doc-status">CONFIDENTIAL</span>
-        </div>
-        <div class="doc-title">Training Center 2026</div>
-        <p class="doc-desc">Training Center is a modern facility dedicated to professional development, skill enhancement, and expert-led learning tailored for individual and team growth.</p>
-      </a>
-            <!-- 簡報 4：Operation Meeting MFG 0701 -->
-      <a href="./viewer.html?file=operation%20meeting%20mfg%200701.pdf&title=Operation%20Meeting%20MFG%20(2026-07-01)" class="doc-card">
-        <div class="doc-header">
-          <i class="fa-solid fa-file-powerpoint doc-icon"></i>
-          <span class="doc-status">CONFIDENTIAL</span>
-        </div>
-        <div class="doc-title">Operation Meeting MFG (2026-07-01)</div>
-        <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
-      </a>
-  </div>
-    </div>
+<!-- 簡報文件專用容器 -->
+<div class="documents-section">
+  <div class="section-title">
+    <i class="fa-solid fa-folder-open"></i> Corporate Executive Presentations
   </div>
 
+  <div class="doc-grid">
+    <!-- 簡報 1：AMAT ENP 報告 -->
+    <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card">
+      <div class="doc-header">
+        <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+        <span class="doc-status">CONFIDENTIAL</span>
+      </div>
+      <div class="doc-title">AMAT ENP Pre-treatment & Line Expansion 2026</div>
+      <p class="doc-desc">Capacity assessment, automated pre-treatment integration, and output forecasting.</p>
+    </a>
+
+    <!-- 簡報 2：Operation Meeting MFG 0922 -->
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card">
+      <div class="doc-header">
+        <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+        <span class="doc-status">CONFIDENTIAL</span>
+      </div>
+      <div class="doc-title">Operation Meeting MFG (2026-09-22)</div>
+      <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
+    </a>
+
+    <!-- 簡報 3：Training Center 2026 -->
+    <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card">
+      <div class="doc-header">
+        <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+        <span class="doc-status">CONFIDENTIAL</span>
+      </div>
+      <div class="doc-title">Training Center 2026</div>
+      <p class="doc-desc">Training Center is a modern facility dedicated to professional development, skill enhancement, and expert-led learning tailored for individual and team growth.</p>
+    </a>
+
+    <!-- 簡報 4：Operation Meeting MFG 0701 -->
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200701.pdf&title=Operation%20Meeting%20MFG%20(2026-07-01)" class="doc-card">
+      <div class="doc-header">
+        <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+        <span class="doc-status">CONFIDENTIAL</span>
+      </div>
+      <div class="doc-title">Operation Meeting MFG (2026-07-01)</div>
+      <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
+    </a>
+  </div>
 </div>
+
+<style>
+  /* 區塊外層容器 */
+  .documents-section {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  /* 區塊標題 */
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+  }
+
+  /* 網格系統：自動適應畫面寬度排版 (2~3 欄) */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  /* 卡片基本樣式優化 */
+  .doc-card {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #334155;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .doc-card:hover {
+    transform: translateY(-3px);
+    border-color: #0284c7;
+    box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.2);
+  }
+
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .doc-icon {
+    font-size: 1.4rem;
+    color: #38bdf8;
+  }
+
+  .doc-status {
+    background: rgba(5, 150, 105, 0.2);
+    color: #34d399;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+
+  .doc-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f8fafc;
+    line-height: 1.4;
+  }
+
+  .doc-desc {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.4;
+  }
+</style>
 
 <!-- 3. Firebase 驗證腳本 -->
 <script type="module">
