@@ -236,12 +236,13 @@
 <!-- 簡報文件專用容器 -->
 <div class="documents-section">
   <div class="section-title">
-    <i class="fa-solid fa-folder-open"></i> Corporate Executive Presentations
+    <i class="fa-solid fa-folder-open"></i> Corporate Executive Presentations 
+    <span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: auto;">💡 提示：您可以直接用滑鼠拖曳卡片來調整順序</span>
   </div>
 
-  <div class="doc-grid">
+  <div class="doc-grid" id="doc-grid-container">
     <!-- 簡報 1：AMAT ENP 報告 -->
-    <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card">
+    <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card" draggable="true">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -251,7 +252,7 @@
     </a>
 
     <!-- 簡報 2：Operation Meeting MFG 0922 -->
-    <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card">
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card" draggable="true">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -261,7 +262,7 @@
     </a>
 
     <!-- 簡報 3：Training Center 2026 -->
-    <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card">
+    <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card" draggable="true">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -271,7 +272,7 @@
     </a>
 
     <!-- 簡報 4：Operation Meeting MFG 0701 -->
-    <a href="./viewer.html?file=operation%20meeting%20mfg%200701.pdf&title=Operation%20Meeting%20MFG%20(2026-07-01)" class="doc-card">
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200701.pdf&title=Operation%20Meeting%20MFG%20(2026-07-01)" class="doc-card" draggable="true">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -283,7 +284,6 @@
 </div>
 
 <style>
-  /* 區塊外層容器：確保寬度能佔滿版面 */
   .documents-section {
     background: #ffffff;
     border: 1px solid #cbd5e1;
@@ -294,7 +294,6 @@
     width: 100%;
   }
 
-  /* 區塊標題 */
   .section-title {
     font-size: 1.1rem;
     font-weight: 700;
@@ -307,21 +306,19 @@
     padding-bottom: 10px;
   }
 
-  /* 強制設定為 2 欄網格排版 */
+  /* 2欄網格排版 */
   .doc-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 強制兩欄並排 */
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
-  /* 響應式：當螢幕較小時自動變為單欄 */
   @media (max-width: 768px) {
     .doc-grid {
       grid-template-columns: 1fr;
     }
   }
 
-  /* 卡片基本樣式 */
   .doc-card {
     background: #1e293b;
     border-radius: 10px;
@@ -331,9 +328,20 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid #334155;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: grab; /* 鼠標變為抓取手勢 */
+  }
+
+  .doc-card:active {
+    cursor: grabbing;
+  }
+
+  /* 拖曳時的樣式變化 */
+  .doc-card.dragging {
+    opacity: 0.4;
+    border: 2px dashed #38bdf8;
   }
 
   .doc-card:hover {
@@ -378,6 +386,57 @@
     line-height: 1.4;
   }
 </style>
+
+<script>
+  // 實作滑鼠拖曳排序功能
+  const container = document.getElementById('doc-grid-container');
+  let draggedItem = null;
+
+  container.addEventListener('dragstart', (e) => {
+    draggedItem = e.target.closest('.doc-card');
+    if (draggedItem) {
+      setTimeout(() => draggedItem.classList.add('dragging'), 0);
+    }
+  });
+
+  container.addEventListener('dragend', () => {
+    if (draggedItem) {
+      draggedItem.classList.remove('dragging');
+      draggedItem = null;
+    }
+  });
+
+  container.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(container, e.clientY, e.clientX);
+    const currentCard = document.querySelector('.dragging');
+    if (!currentCard) return;
+
+    if (afterElement == null) {
+      container.appendChild(currentCard);
+    } else {
+      container.insertBefore(currentCard, afterElement);
+    }
+  });
+
+  function getDragAfterElement(container, y, x) {
+    const draggableElements = [...container.querySelectorAll('.doc-card:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      // 計算滑鼠相對元素中心點的距離，支援 2 欄式矩陣拖曳
+      const offsetX = x - box.left - box.width / 2;
+      const offsetY = y - box.top - box.height / 2;
+      const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+
+      if (distance < closest.distance) {
+        return { offset: distance, element: child };
+      } else {
+        return closest;
+      }
+    }, { distance: Number.POSITIVE_INFINITY }).element;
+  }
+</script>
 
 <!-- 3. Firebase 驗證腳本 -->
 <script type="module">
