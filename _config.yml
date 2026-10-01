@@ -1,3 +1,6 @@
 theme: jekyll-theme-cayman
-title: 個人簡報與文件資料庫
-description: 整理與展示工作簡報、報告與技術文件
+title: Work Presentation & Document Archive
+description: Organizing and presenting business presentations, reports, and technical documentation.
+
+include:
+  - "ENP_Expansion_Feedback 2026.pdf"
