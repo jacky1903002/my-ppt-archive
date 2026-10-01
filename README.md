@@ -249,6 +249,15 @@
         <div class="doc-title">Operation Meeting MFG (2026-09-22)</div>
         <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
       </a>
+            <!-- 簡報 3：Trainging Center 2026  -->
+      <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Training%20Center%202026%20" class="doc-card">
+        <div class="doc-header">
+          <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+          <span class="doc-status">CONFIDENTIAL</span>
+        </div>
+        <div class="doc-title">Trainging Center 2026</div>
+        <p class="doc-desc">Training Center is a modern facility dedicated to professional development, skill enhancement, and expert-led learning tailored for individual and team growth.</p>
+      </a>
 
     </div>
   </div>
