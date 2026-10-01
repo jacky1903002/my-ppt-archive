@@ -9,7 +9,7 @@
 </a>
 
 <!-- 新增簡報：Operation Meeting MFG 0922 -->
-      <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card">
+<a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card">
         <div class="doc-header">
           <i class="fa-solid fa-file-powerpoint doc-icon"></i>
           <span class="doc-status">CONFIDENTIAL</span>
