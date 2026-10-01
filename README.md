@@ -237,7 +237,7 @@
 <div class="documents-section">
   <div class="section-title">
     <i class="fa-solid fa-folder-open"></i> Corporate Executive Presentations 
-    <span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: auto;">💡 提示：您可以直接用滑鼠拖曳卡片來調整順序</span>
+<span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: auto;">💡 Tip: You can drag and drop cards to reorder them</span>
   </div>
 
   <div class="doc-grid" id="doc-grid-container">
