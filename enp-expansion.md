@@ -35,57 +35,55 @@
   </ul>
 </div>
 
-<!-- 3. Firebase SDK 驗證模組 -->
+<!-- 3. Firebase 驗證邏輯 -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // ⚠️ 請將以下參數替換為您在 Firebase 控制台看到的真實資料
-  // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  // 您的 Firebase 真實設定
+  const firebaseConfig = {
+    apiKey: "AIzaSyAxz1tGF3ExWTH-KQKUq5IRvqEr6iwuVmQ",
+    authDomain: "my-ppt-auth.firebaseapp.com",
+    databaseURL: "https://my-ppt-auth-default-rtdb.firebaseio.com",
+    projectId: "my-ppt-auth",
+    storageBucket: "my-ppt-auth.firebasestorage.app",
+    messagingSenderId: "986466126958",
+    appId: "1:986466126958:web:31f4e24db18f18e347ea7f",
+    measurementId: "G-51PC8DCJDM"
+  };
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAxz1tGF3ExWTH-KQKUq5IRvqEr6iwuVmQ",
-  authDomain: "my-ppt-auth.firebaseapp.com",
-  databaseURL: "https://my-ppt-auth-default-rtdb.firebaseio.com",
-  projectId: "my-ppt-auth",
-  storageBucket: "my-ppt-auth.firebasestorage.app",
-  messagingSenderId: "986466126958",
-  appId: "1:986466126958:web:31f4e24db18f18e347ea7f",
-  measurementId: "G-51PC8DCJDM"
-};
+  // 初始化 Firebase 與 Authentication
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  // 抓取頁面 DOM 元素
+  const loginSection = document.getElementById('login-section');
+  const protectedContent = document.getElementById('protected-content');
+  const userInfo = document.getElementById('user-info');
+  const errorMsg = document.getElementById('error-msg');
+  const passwordInput = document.getElementById('password');
+  const togglePasswordBtn = document.getElementById('toggle-password-btn');
 
-  // 切換密碼顯示/隱藏功能
+  // 1. 切換密碼顯示/隱藏功能
   togglePasswordBtn.addEventListener('click', () => {
     const isPassword = passwordInput.type === 'password';
     passwordInput.type = isPassword ? 'text' : 'password';
     togglePasswordBtn.innerText = isPassword ? '🙈' : '👁️';
   });
 
-  // 監聽 Firebase 登入狀態變更
+  // 2. 監聽 Firebase 登入狀態變更
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // 驗證成功：隱藏登入框，解鎖顯示 PDF 內容
       loginSection.style.display = 'none';
       protectedContent.style.setProperty('display', 'block', 'important');
       userInfo.innerText = '已登入：' + user.email;
     } else {
-      // 未登入或已登出：顯示登入框，強制隱藏簡報
       loginSection.style.display = 'block';
       protectedContent.style.setProperty('display', 'none', 'important');
     }
   });
 
-  // 執行 Firebase Email/Password 登入驗證
+  // 3. 執行 Firebase 登入
   document.getElementById('login-btn').addEventListener('click', () => {
     const email = document.getElementById('email').value;
     const password = passwordInput.value;
@@ -94,12 +92,12 @@ const analytics = getAnalytics(app);
     signInWithEmailAndPassword(auth, email, password)
       .catch((error) => {
         console.error("Firebase Login Error:", error);
-        errorMsg.innerText = "登入失敗：請確認輸入的電子郵件與密碼是否與 Firebase 設定相符";
+        errorMsg.innerText = "登入失敗：請確認帳號密碼是否正確，或此帳號是否已於 Firebase Console 建立。";
         errorMsg.style.display = 'block';
       });
   });
 
-  // 執行登出
+  // 4. 執行登出
   document.getElementById('logout-btn').addEventListener('click', () => {
     signOut(auth);
   });
