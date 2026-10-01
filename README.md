@@ -283,7 +283,7 @@
 </div>
 
 <style>
-  /* 區塊外層容器 */
+  /* 區塊外層容器：確保寬度能佔滿版面 */
   .documents-section {
     background: #ffffff;
     border: 1px solid #cbd5e1;
@@ -291,6 +291,7 @@
     padding: 20px 24px;
     margin-top: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    width: 100%;
   }
 
   /* 區塊標題 */
@@ -306,14 +307,21 @@
     padding-bottom: 10px;
   }
 
-  /* 網格系統：自動適應畫面寬度排版 (2~3 欄) */
+  /* 強制設定為 2 欄網格排版 */
   .doc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* 強制兩欄並排 */
     gap: 16px;
   }
 
-  /* 卡片基本樣式優化 */
+  /* 響應式：當螢幕較小時自動變為單欄 */
+  @media (max-width: 768px) {
+    .doc-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 卡片基本樣式 */
   .doc-card {
     background: #1e293b;
     border-radius: 10px;
