@@ -1,4 +1,4 @@
-# AMAT ENP Expansion & Capacity Report 2026
+# ENP Expansion & Capacity Report 2026
 
 <!-- 1. Login Form -->
 <div id="login-section" style="max-width: 400px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; margin: 20px 0;">
