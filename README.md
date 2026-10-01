@@ -8,12 +8,12 @@
   <p class="doc-desc">Capacity assessment and automated pre-treatment integration.</p>
 </a>
 
-<!-- 未來上傳新簡報 B，只需要加這區塊，直接指向 viewer.html 即可！ -->
-<a href="./viewer.html?file=Project_B_Report.pdf&title=Project%20B%20Capacity%20Report" class="doc-card">
-  <div class="doc-header">
-    <i class="fa-solid fa-file-powerpoint doc-icon"></i>
-    <span class="doc-status">CONFIDENTIAL</span>
-  </div>
-  <div class="doc-title">Project B Capacity Report</div>
-  <p class="doc-desc">2026 Q3 Production Output Analysis.</p>
-</a>
+<!-- 新增簡報：Operation Meeting MFG 0922 -->
+      <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card">
+        <div class="doc-header">
+          <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+          <span class="doc-status">CONFIDENTIAL</span>
+        </div>
+        <div class="doc-title">Operation Meeting MFG (2026-09-22)</div>
+        <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
+      </a>
