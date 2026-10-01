@@ -280,6 +280,15 @@
       <div class="doc-title">Operation Meeting MFG (2026-07-01)</div>
       <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
     </a>
+        <!-- 簡報 5：Operation Meeting MFG 0513 -->
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200513.pdf&title=Operation%20Meeting%20MFG%20(2026-05-13)" class="doc-card" draggable="true">
+      <div class="doc-header">
+        <i class="fa-solid fa-file-powerpoint doc-icon"></i>
+        <span class="doc-status">CONFIDENTIAL</span>
+      </div>
+      <div class="doc-title">Operation Meeting MFG (2026-05-13)</div>
+      <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
+    </a>
   </div>
 </div>
 
