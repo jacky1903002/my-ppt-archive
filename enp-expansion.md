@@ -136,24 +136,27 @@
     margin-bottom: 8px;
   }
 
-  /* 全螢幕按鈕樣式 */
-  .btn-fullscreen {
-    background: #0284c7;
+  /* PPT 簡報播放按鈕樣式 */
+  .btn-ppt-present {
+    background: linear-gradient(135deg, #0284c7, #2563eb);
     color: #ffffff;
     border: none;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 13px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    transition: background 0.2s;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    transition: all 0.2s ease;
   }
 
-  .btn-fullscreen:hover {
-    background: #0369a1;
+  .btn-ppt-present:hover {
+    background: linear-gradient(135deg, #0369a1, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.5);
   }
 
   /* PDF Preview Frame 包裹容器 */
@@ -163,6 +166,24 @@
     overflow: hidden;
     border: 1px solid #475569;
     background: #0f172a;
+    transition: all 0.3s ease;
+  }
+
+  /* 當進入全螢幕簡報模式時的滿版樣式 */
+  .pdf-container:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #000000 !important;
+  }
+
+  .pdf-container:-webkit-full-screen {
+    width: 100vw !important;
+    height: 100vh !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #000000 !important;
   }
 
   iframe {
@@ -170,6 +191,11 @@
     height: 700px;
     border: none;
     display: block;
+  }
+
+  .pdf-container:fullscreen iframe,
+  .pdf-container:-webkit-full-screen iframe {
+    height: 100vh !important;
   }
 </style>
 
@@ -227,28 +253,29 @@
     </ul>
   </div>
 
-  <!-- PDF 簡報預覽面板（含全螢幕按鈕） -->
+  <!-- PDF 簡報預覽面板（含 PPT 簡報播放按鈕） -->
   <div class="panel-card">
     <div class="panel-header">
       <div class="panel-title">
-        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Live Executive Presentation Preview
+        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Executive Presentation
       </div>
-      <!-- 全螢幕按鈕 -->
-      <button type="button" class="btn-fullscreen" onclick="toggleFullScreen()">
-        <i class="fa-solid fa-expand"></i> Fullscreen Preview
+      <!-- PPT 滿版簡報播放按鈕 -->
+      <button type="button" class="btn-ppt-present" onclick="startPPTPresentation()">
+        <i class="fa-solid fa-play"></i> Start Presentation (全螢幕簡報)
       </button>
     </div>
     <div class="pdf-container" id="pdf-wrapper">
-      <iframe id="pdf-frame" src="ENP_Expansion_Feedback%202026.pdf" allowfullscreen></iframe>
+      <iframe id="pdf-frame" src="ENP_Expansion_Feedback%202026.pdf#view=Fit&pagemode=thumbs" allowfullscreen></iframe>
     </div>
   </div>
 
 </div>
 
-<!-- 全螢幕觸發腳本 -->
+<!-- PPT 全螢幕簡報播放腳本 -->
 <script>
-  function toggleFullScreen() {
+  function startPPTPresentation() {
     const pdfWrapper = document.getElementById('pdf-wrapper');
+    
     if (!document.fullscreenElement) {
       if (pdfWrapper.requestFullscreen) {
         pdfWrapper.requestFullscreen();
