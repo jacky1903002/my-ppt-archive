@@ -237,12 +237,12 @@
 <div class="documents-section">
   <div class="section-title">
     <i class="fa-solid fa-folder-open"></i> Corporate Executive Presentations 
-<span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: auto;">💡 Tip: You can drag and drop cards to reorder them</span>
+    <span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: auto;">💡 Tip: You can drag and drop cards to reorder them</span>
   </div>
 
   <div class="doc-grid" id="doc-grid-container">
     <!-- 簡報 1：AMAT ENP 報告 -->
-    <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card" draggable="true">
+    <a href="./viewer.html?file=ENP_Expansion_Feedback%202026.pdf&title=AMAT%20ENP%20Pre-treatment%20%26%20Line%20Expansion%202026" class="doc-card" draggable="true" data-id="card-1">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -252,7 +252,7 @@
     </a>
 
     <!-- 簡報 2：Operation Meeting MFG 0922 -->
-    <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card" draggable="true">
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200922.pdf&title=Operation%20Meeting%20MFG%20(2026-09-22)" class="doc-card" draggable="true" data-id="card-2">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -262,7 +262,7 @@
     </a>
 
     <!-- 簡報 3：Training Center 2026 -->
-    <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card" draggable="true">
+    <a href="./viewer.html?file=Training%20Center%202026.pdf&title=Training%20Center%202026" class="doc-card" draggable="true" data-id="card-3">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -272,7 +272,7 @@
     </a>
 
     <!-- 簡報 4：Operation Meeting MFG 0701 -->
-    <a href="./viewer.html?file=operation%20meeting%20mfg%200701.pdf&title=Operation%20Meeting%20MFG%20(2026-07-01)" class="doc-card" draggable="true">
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200701.pdf&title=Operation%20Meeting%20MFG%20(2026-07-01)" class="doc-card" draggable="true" data-id="card-4">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -280,8 +280,9 @@
       <div class="doc-title">Operation Meeting MFG (2026-07-01)</div>
       <p class="doc-desc">Manufacturing operation review, capacity metrics, and action items.</p>
     </a>
-        <!-- 簡報 5：Operation Meeting MFG 0513 -->
-    <a href="./viewer.html?file=operation%20meeting%20mfg%200513.pdf&title=Operation%20Meeting%20MFG%20(2026-05-13)" class="doc-card" draggable="true">
+
+    <!-- 簡報 5：Operation Meeting MFG 0513 -->
+    <a href="./viewer.html?file=operation%20meeting%20mfg%200513.pdf&title=Operation%20Meeting%20MFG%20(2026-05-13)" class="doc-card" draggable="true" data-id="card-5">
       <div class="doc-header">
         <i class="fa-solid fa-file-powerpoint doc-icon"></i>
         <span class="doc-status">CONFIDENTIAL</span>
@@ -315,14 +316,12 @@
     padding-bottom: 10px;
   }
 
-  /* 強制設定為 5 欄網格排版 (5xn) */
   .doc-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 14px;
   }
 
-  /* 響應式調整：依螢幕寬度自動遞減欄數，避免擠壓 */
   @media (max-width: 1400px) {
     .doc-grid {
       grid-template-columns: repeat(4, 1fr);
@@ -409,10 +408,29 @@
 </style>
 
 <script>
-  // 拖曳排序功能 (支援 5 欄矩陣拖曳計算)
   const container = document.getElementById('doc-grid-container');
   let draggedItem = null;
 
+  // 1. 頁面載入時，從 LocalStorage 讀取並還原順序
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedOrder = localStorage.getItem('exec_presentations_order');
+    if (savedOrder) {
+      try {
+        const orderIds = JSON.parse(savedOrder);
+        const cards = [...container.querySelectorAll('.doc-card')];
+        orderIds.forEach(id => {
+          const card = cards.find(c => c.getAttribute('data-id') === id);
+          if (card) {
+            container.appendChild(card);
+          }
+        });
+      } catch (e) {
+        console.error('Failed to load card order', e);
+      }
+    }
+  });
+
+  // 2. 拖曳相關事件
   container.addEventListener('dragstart', (e) => {
     draggedItem = e.target.closest('.doc-card');
     if (draggedItem) {
@@ -424,6 +442,11 @@
     if (draggedItem) {
       draggedItem.classList.remove('dragging');
       draggedItem = null;
+      
+      // 3. 拖曳結束時，將目前的卡片順序儲存到 LocalStorage
+      const cards = [...container.querySelectorAll('.doc-card')];
+      const orderIds = cards.map(c => c.getAttribute('data-id'));
+      localStorage.setItem('exec_presentations_order', JSON.stringify(orderIds));
     }
   });
 
