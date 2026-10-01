@@ -306,17 +306,23 @@
     padding-bottom: 10px;
   }
 
-  /* 強制設定為 4 欄網格排版 (4xn 矩陣) */
+  /* 強制設定為 5 欄網格排版 (5xn) */
   .doc-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
   }
 
-  /* 響應式調整：中型螢幕自動變為 2 欄，手機版變為 1 欄 */
-  @media (max-width: 1200px) {
+  /* 響應式調整：依螢幕寬度自動遞減欄數，避免擠壓 */
+  @media (max-width: 1400px) {
     .doc-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .doc-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
@@ -329,12 +335,12 @@
   .doc-card {
     background: #1e293b;
     border-radius: 10px;
-    padding: 16px;
+    padding: 14px;
     text-decoration: none;
     color: #ffffff;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid #334155;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -363,38 +369,38 @@
   }
 
   .doc-icon {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #38bdf8;
   }
 
   .doc-status {
     background: rgba(5, 150, 105, 0.2);
     color: #34d399;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    padding: 2px 6px;
+    padding: 2px 5px;
     border-radius: 4px;
     letter-spacing: 0.05em;
     border: 1px solid rgba(52, 211, 153, 0.3);
   }
 
   .doc-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #f8fafc;
-    line-height: 1.35;
+    line-height: 1.3;
   }
 
   .doc-desc {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #94a3b8;
     margin: 0;
-    line-height: 1.35;
+    line-height: 1.3;
   }
 </style>
 
 <script>
-  // 拖曳排序功能 (支援 4 欄矩陣拖曳計算)
+  // 拖曳排序功能 (支援 5 欄矩陣拖曳計算)
   const container = document.getElementById('doc-grid-container');
   let draggedItem = null;
 
@@ -442,7 +448,6 @@
     }, { distance: Number.POSITIVE_INFINITY }).element;
   }
 </script>
-
 <!-- 3. Firebase 驗證腳本 -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
