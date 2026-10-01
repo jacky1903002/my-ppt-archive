@@ -107,12 +107,18 @@
     margin-bottom: 25px;
   }
 
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
   .panel-title {
     font-size: 16px;
     font-weight: 600;
     color: #e2e8f0;
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin: 0;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -130,6 +136,26 @@
     margin-bottom: 8px;
   }
 
+  /* 全螢幕按鈕樣式 */
+  .btn-fullscreen {
+    background: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+  }
+
+  .btn-fullscreen:hover {
+    background: #0369a1;
+  }
+
   /* PDF Preview Frame 包裹容器 */
   .pdf-container {
     width: 100%;
@@ -141,7 +167,7 @@
 
   iframe {
     width: 100%;
-    height: 650px;
+    height: 700px;
     border: none;
     display: block;
   }
@@ -163,7 +189,7 @@
     AMAT ENP Expansion & Capacity Report 2026
   </div>
 
-  <!-- 數據重點指標面板 (Metrics Summary) -->
+  <!-- 數據重點指標面板 -->
   <div class="metrics-grid">
     <div class="metric-card">
       <div class="metric-header">
@@ -188,10 +214,12 @@
     </div>
   </div>
 
-  <!-- Key Notes 指標說明區塊 -->
+  <!-- Key Notes 說明區塊 -->
   <div class="panel-card">
-    <div class="panel-title">
-      <i class="fa-solid fa-list-check" style="color: #38bdf8;"></i> Key Capacity Metrics & Highlights
+    <div class="panel-header">
+      <div class="panel-title">
+        <i class="fa-solid fa-list-check" style="color: #38bdf8;"></i> Key Capacity Metrics & Highlights
+      </div>
     </div>
     <ul class="key-notes-list">
       <li><b>2026 Before Expansion Target</b>: Max capacity of 2,592 PCS. At 80% utilization, estimated output is 2,070 PCS/year (min).</li>
@@ -199,14 +227,40 @@
     </ul>
   </div>
 
-  <!-- PDF 簡報預覽面板 -->
+  <!-- PDF 簡報預覽面板（含全螢幕按鈕） -->
   <div class="panel-card">
-    <div class="panel-title">
-      <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Live Executive Presentation Preview
+    <div class="panel-header">
+      <div class="panel-title">
+        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Live Executive Presentation Preview
+      </div>
+      <!-- 全螢幕按鈕 -->
+      <button type="button" class="btn-fullscreen" onclick="toggleFullScreen()">
+        <i class="fa-solid fa-expand"></i> Fullscreen Preview
+      </button>
     </div>
-    <div class="pdf-container">
-      <iframe src="ENP_Expansion_Feedback%202026.pdf"></iframe>
+    <div class="pdf-container" id="pdf-wrapper">
+      <iframe id="pdf-frame" src="ENP_Expansion_Feedback%202026.pdf" allowfullscreen></iframe>
     </div>
   </div>
 
 </div>
+
+<!-- 全螢幕觸發腳本 -->
+<script>
+  function toggleFullScreen() {
+    const pdfWrapper = document.getElementById('pdf-wrapper');
+    if (!document.fullscreenElement) {
+      if (pdfWrapper.requestFullscreen) {
+        pdfWrapper.requestFullscreen();
+      } else if (pdfWrapper.webkitRequestFullscreen) { /* Safari */
+        pdfWrapper.webkitRequestFullscreen();
+      } else if (pdfWrapper.msRequestFullscreen) { /* IE11 */
+        pdfWrapper.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+</script>
